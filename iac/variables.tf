@@ -10,7 +10,6 @@ variable "vmsize" {
 
 variable "prefix" {
   type                      = string
-  default                   = "tf"
   description               = "A prefix used for all resources"
 }
 

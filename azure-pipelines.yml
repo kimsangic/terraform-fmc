@@ -7,7 +7,6 @@ parameters:
 - name: VMSIZE
   displayName: 'VM Size'
   type: string
-  default: D48as_v4
   values:
   - D96as_v4
   - D64as_v4
@@ -225,7 +224,12 @@ jobs:
       set -x
       cd iac
       echo '#######Terraform Destroy########'
-      terraform destroy --auto-approve -var="clientId=$(sp-client-id-tf-0693)" -var="tenantId=$(sp-tenant-id-tf-0693)" -var="subscriptionId=$(sp-subscription-id-tf-0693)" -var="vmsize=${{ parameters.vmsize }}" -var="storage_account_rg=${{ parameters.storage_account_rg }}"
+      terraform destroy --auto-approve -var="clientId=$(sp-client-id-tf-0693)" -var="tenantId=$(sp-tenant-id-tf-0693)" -var="subscriptionId=$(sp-subscription-id-tf-0693)" -var="vmsize=${{ parameters.vmsize }}" -var="storage_account_rg=${{ parameters.storage_account_rg }}" -var="{{parameters.JOB_PREFIX}}"
     condition: ${{ parameters.destroy }}
     displayName: 'Terraform Destroy'
+
+  - script: |
+      ##vso[task.uploadsummary]summary.md
+    displayName: 'Write summary'
+
 

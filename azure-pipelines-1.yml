@@ -1,3 +1,9 @@
+parameters:
+- name: JOB_PREFIX
+  displayName: 'Job prefix to destroy'
+  type: string
+  default: ""
+
 trigger: none
 pr: none
 
@@ -42,6 +48,6 @@ jobs:
       set -x
       cd iac
       echo '#######Terraform Destroy########'
-      terraform destroy --auto-approve -var="clientId=$(sp-client-id-tf-0693)" -var="tenantId=$(sp-tenant-id-tf-0693)" -var="subscriptionId=$(sp-subscription-id-tf-0693)" -var="vmsize=default" -var="storage_account_rg=default"
+      terraform destroy --auto-approve -var="clientId=$(sp-client-id-tf-0693)" -var="tenantId=$(sp-tenant-id-tf-0693)" -var="subscriptionId=$(sp-subscription-id-tf-0693)" -var="vmsize=default" -var="storage_account_rg=default" -var="prefix=${{parameters.JOB_PREFIX}}"
     displayName: 'Terraform Destroy'
 
