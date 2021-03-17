@@ -2,7 +2,7 @@ parameters:
 - name: JOB_PREFIX
   displayName: 'Job prefix used to distinquish workloads'
   type: string
-  default: "fmc"
+  default: ""
 
 - name: VMSIZE
   displayName: 'VM Size'
@@ -118,7 +118,7 @@ jobs:
       echo '#######Terraform Init########'
       terraform init -backend-config="storage_account_name=$(TF_STORAGE_ACCT_NAME)" -backend-config="container_name=$(TF_STORAGE_CONT_NAME)" -backend-config="access_key=$(ak-backend-sa-0693)" -backend-config="key=$(TF_STATE_FILE)" 
       echo '#######Terraform Plan########'
-      terraform plan -var="clientId=$(sp-client-id-tf-0693)" -var="tenantId=$(sp-tenant-id-tf-0693)" -var="subscriptionId=$(sp-subscription-id-tf-0693)" -var="vmsize=${{ parameters.vmsize }}" -var="storage_account_rg=${{ parameters.storage_account_rg }}" -out="out.plan" 
+      terraform plan -var="clientId=$(sp-client-id-tf-0693)" -var="tenantId=$(sp-tenant-id-tf-0693)" -var="subscriptionId=$(sp-subscription-id-tf-0693)" -var="vmsize=${{ parameters.vmsize }}" -var="storage_account_rg=${{ parameters.storage_account_rg }}" -var="prefix=${{ parameters.JOB_PREFIX }}" -out="out.plan" 
       echo '#######Terraform Apply########'
       terraform apply out.plan
     displayName: 'Terraform Init, Plan and Apply '

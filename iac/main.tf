@@ -1,9 +1,9 @@
 locals {
   # All variables used in this file should be 
   # added as locals here 
-  prefix                = "${var.prefix}-0693"
+  prefix                = "${var.prefix}-"
   location              = var.location
-  vault_name            = "${local.prefix}-vault"
+  vault_name            = "${local.prefix}vault"
   vmsize                = "Standard_${var.vmsize}"
   
   # Common tags should go here
@@ -15,7 +15,7 @@ locals {
 
 # Create a Virtual Network within the Resource Group
 resource "azurerm_virtual_network" "main" {
-  name                = "${local.prefix}-vnet"
+  name                = "${local.prefix}vnet"
   address_space       = ["10.100.0.0/16"]
   resource_group_name = data.azurerm_resource_group.project-rg.name
   location            = local.location 
@@ -23,7 +23,7 @@ resource "azurerm_virtual_network" "main" {
 
 # Create a Subnet within the Virtual Network
 resource "azurerm_subnet" "internal" {
-  name                 = "${local.prefix}-snet-in"
+  name                 = "${local.prefix}snet-in"
   virtual_network_name = azurerm_virtual_network.main.name
   resource_group_name  = data.azurerm_resource_group.project-rg.name
   address_prefix       = "10.100.2.0/24"
@@ -31,7 +31,7 @@ resource "azurerm_subnet" "internal" {
 
 # Create a Network Security Group with some rules
 resource "azurerm_network_security_group" "main" {
-  name                = "${local.prefix}-NSG"
+  name                = "${local.prefix}NSG"
   location            = local.location 
   resource_group_name = data.azurerm_resource_group.project-rg.name 
 
@@ -50,14 +50,14 @@ resource "azurerm_network_security_group" "main" {
 }
 
 resource "azurerm_public_ip" "pip" {
-  name                = "${local.prefix}-pip"
+  name                = "${local.prefix}pip"
   resource_group_name = data.azurerm_resource_group.project-rg.name
   location            = local.location
   allocation_method   = "Static"
 }
 
 resource "azurerm_network_interface" "main" {
-  name                = "${local.prefix}-nic1"
+  name                = "${local.prefix}nic1"
   resource_group_name = data.azurerm_resource_group.project-rg.name
   location            = local.location
 
@@ -71,7 +71,7 @@ resource "azurerm_network_interface" "main" {
 
 # Create a network internal interface for VMs and attach the PIP and the NSG
 resource "azurerm_network_interface" "internal" {
-  name                      = "${local.prefix}-nic2"
+  name                      = "${local.prefix}nic2"
   location                  = local.location 
   resource_group_name       = data.azurerm_resource_group.project-rg.name 
 
@@ -90,7 +90,7 @@ resource "tls_private_key" "bootstrap_private_key" {
 
 # Create a new Virtual Machine based on the Golden Image
 resource "azurerm_virtual_machine" "vm" {
-  name                              = "${local.prefix}-vm"
+  name                              = "${local.prefix}vm"
   location                          = local.location 
   resource_group_name               = data.azurerm_resource_group.project-rg.name 
   vm_size                           = local.vmsize
@@ -105,7 +105,7 @@ resource "azurerm_virtual_machine" "vm" {
   }
 
   storage_os_disk {
-    name                            = "${local.prefix}-os"
+    name                            = "${local.prefix}os"
     managed_disk_type               = "Standard_LRS"
     caching                         = "ReadWrite"
     create_option                   = "FromImage"
@@ -114,7 +114,7 @@ resource "azurerm_virtual_machine" "vm" {
   delete_os_disk_on_termination     = true
 
   storage_data_disk {
-    name                            = "${local.prefix}-data"
+    name                            = "${local.prefix}data"
     create_option                   = "Empty"
     lun                             = 10
     managed_disk_type               = "Premium_LRS"
@@ -167,7 +167,7 @@ resource "azurerm_virtual_machine" "vm" {
 
 #Managed Identity so that VM can access storage account easily
 resource "azurerm_user_assigned_identity" "managed_id" {
-  name                = "${local.prefix}-mi"
+  name                = "${local.prefix}mi"
   location            = local.location
   resource_group_name = data.azurerm_resource_group.project-rg.name
   tags                = local.tags
