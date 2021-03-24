@@ -15,7 +15,7 @@ locals {
 # Create a Virtual Network within the Resource Group
 resource "azurerm_virtual_network" "main" {
   name                = "${local.prefix}-vnet"
-  address_space       = ["10.100.0.0/16"]
+  address_space       = ["10.200.0.0/16"]
   resource_group_name = data.azurerm_resource_group.project-rg.name
   location            = local.location 
 }
@@ -25,7 +25,7 @@ resource "azurerm_subnet" "internal" {
   name                 = "${local.prefix}-snet-in"
   virtual_network_name = azurerm_virtual_network.main.name
   resource_group_name  = data.azurerm_resource_group.project-rg.name
-  address_prefix       = "10.100.2.0/24"
+  address_prefix       = "10.200.2.0/24"
 }
 
 # Create a Network Security Group with some rules
