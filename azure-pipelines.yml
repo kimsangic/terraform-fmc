@@ -75,9 +75,9 @@ jobs:
     TF_STORAGE_ACCT_NAME: tfstateacct0693
     TF_STORAGE_CONT_NAME: tfcont-0693 
     TF_STATE_FILE: terraform.tfstate 
-  #pool: ubuntu-18.04-vmss
-  pool:
-    vmImage: 'ubuntu-latest'
+  pool: ubuntu-18.04-vnet-peer
+  # pool:
+  #   vmImage: 'ubuntu-latest'
 
   steps:
   #Setup Custom Variables for pipeline
