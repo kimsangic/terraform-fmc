@@ -19,7 +19,7 @@ output "private_key" {
 }
 
 output "vm_ip" {
-  value = data.azurerm_public_ip.pip.ip_address 
+  value = azurerm_public_ip.pip.ip_address 
 }
 
 output "vm_private_ip" {

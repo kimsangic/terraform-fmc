@@ -22,7 +22,7 @@ data "template_file" "cloud_init" {
   template = file("${path.module}/cloud-init/cloud-config.yaml")
 }
 
-data "azurerm_agent_vnet" "agent-vnet" {
+data "azurerm_virtual_network" "agent-vnet" {
     name            = "vmssagents-vnet"
     resource_group  = "ADO-AGENTS"
 }
