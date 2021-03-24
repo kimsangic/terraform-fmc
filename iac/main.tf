@@ -159,7 +159,8 @@ resource "azurerm_virtual_machine" "vm" {
       type        = "ssh"
       user        = "azureuser"
       private_key = tls_private_key.bootstrap_private_key.private_key_pem
-      host        = data.azurerm_public_ip.pip.ip_address
+      #host        = azurerm_network_interface.internal.private_ip_address 
+      host        = azurerm_public_ip.pip.ip_address 
     }
   }
 }
@@ -188,4 +189,17 @@ resource "azurerm_role_assignment" "blob_contributor" {
 #   disk_size_gb          = 16000
 # }
 
+resource "azurerm_virtual_network_peering" "agent-worker" {
+  name                      = "agent-worker"
+  resource_group_name       = data.azurerm_resource_group.project-rg.name
+  virtual_network_name      = data.azurerm_virtual_network.agent-vnet.name
+  remote_virtual_network_id = azurerm_virtual_network.main.id
+}
+
+resource "azurerm_virtual_network_peering" "worker-agent" {
+  name                      = "worker-agent"
+  resource_group_name       = data.azurerm_resource_group.project-rg.name
+  virtual_network_name      = azurerm_virtual_network.main.name
+  remote_virtual_network_id = data.azurerm_virtual_network.agent-vnet.id
+}
 

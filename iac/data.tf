@@ -13,11 +13,16 @@ data "azurerm_image" "fmc-img" {
   resource_group_name = "Images"
 }
 
-data "azurerm_public_ip" "pip" {
-  name                = azurerm_public_ip.pip.name
-  resource_group_name = data.azurerm_resource_group.project-rg.name 
-}
+# data "azurerm_public_ip" "pip" {
+#   name                = azurerm_public_ip.pip.name
+#   resource_group_name = data.azurerm_resource_group.project-rg.name 
+# }
 
 data "template_file" "cloud_init" {
   template = file("${path.module}/cloud-init/cloud-config.yaml")
+}
+
+data "azurerm_agent_vnet" "agent-vnet" {
+    name            = "vmssagents-vnet"
+    resource_group  = "ADO-AGENTS"
 }
