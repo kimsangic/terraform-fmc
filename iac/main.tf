@@ -192,7 +192,7 @@ resource "azurerm_role_assignment" "blob_contributor" {
 
 resource "azurerm_virtual_network_peering" "agent-worker" {
   name                      = "agent-worker"
-  resource_group_name       = data.azurerm_resource_group.project-rg.name
+  resource_group_name       = data.azurerm_virtual_network.agent-vnet.resource_group_name
   virtual_network_name      = data.azurerm_virtual_network.agent-vnet.name
   remote_virtual_network_id = azurerm_virtual_network.main.id
 }
