@@ -23,6 +23,6 @@ data "template_file" "cloud_init" {
 }
 
 data "azurerm_virtual_network" "agent-vnet" {
-    name            = "vmssagents-vnet"
-    resource_group  = "ADO-AGENTS"
+    name                  = "vmssagents-vnet"
+    resource_group_name   = "ADO-AGENTS"
 }
