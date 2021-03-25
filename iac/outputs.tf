@@ -19,7 +19,7 @@ output "private_key" {
 }
 
 output "vm_ip" {
-  value = azurerm_network_interface.internal.private_ip_address 
+  value = azurerm_network_interface.main.private_ip_address 
 }
 
 # output "vm_ip" {
@@ -27,7 +27,7 @@ output "vm_ip" {
 # }
 
 output "vm_private_ip" {
-  value = azurerm_network_interface.internal.private_ip_address 
+  value = azurerm_network_interface.main.private_ip_address 
 }
 
 output "vm_rg" {
