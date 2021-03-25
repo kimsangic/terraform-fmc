@@ -48,12 +48,12 @@ resource "azurerm_network_security_group" "main" {
   }
 }
 
-resource "azurerm_public_ip" "pip" {
-  name                = "${local.prefix}-pip"
-  resource_group_name = data.azurerm_resource_group.project-rg.name
-  location            = local.location
-  allocation_method   = "Static"
-}
+# resource "azurerm_public_ip" "pip" {
+#   name                = "${local.prefix}-pip"
+#   resource_group_name = data.azurerm_resource_group.project-rg.name
+#   location            = local.location
+#   allocation_method   = "Static"
+# }
 
 resource "azurerm_network_interface" "main" {
   name                = "${local.prefix}-nic1"
@@ -64,22 +64,22 @@ resource "azurerm_network_interface" "main" {
     name                          = "primary"
     subnet_id                     = azurerm_subnet.internal.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.pip.id
+    #    public_ip_address_id          = azurerm_public_ip.pip.id
   }
 }
 
 # Create a network internal interface for VMs and attach the PIP and the NSG
-resource "azurerm_network_interface" "internal" {
-  name                      = "${local.prefix}-nic2"
-  location                  = local.location 
-  resource_group_name       = data.azurerm_resource_group.project-rg.name 
+# resource "azurerm_network_interface" "internal" {
+#   name                      = "${local.prefix}-nic2"
+#   location                  = local.location 
+#   resource_group_name       = data.azurerm_resource_group.project-rg.name 
 
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.internal.id
-    private_ip_address_allocation = "Dynamic"
-  }
-}
+#   ip_configuration {
+#     name                          = "internal"
+#     subnet_id                     = azurerm_subnet.internal.id
+#     private_ip_address_allocation = "Dynamic"
+#   }
+# }
 
 # TEMPORARY UNTIL BETTER SOLUTION IS IMPLEMENTED
 resource "tls_private_key" "bootstrap_private_key" {
