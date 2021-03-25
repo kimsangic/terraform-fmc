@@ -145,7 +145,7 @@ resource "azurerm_virtual_machine" "vm" {
       type        = "ssh"
       user        = "azureuser"
       private_key = tls_private_key.bootstrap_private_key.private_key_pem
-      host        = azurerm_network_interface.internal.private_ip_address 
+      host        = azurerm_network_interface.main.private_ip_address 
     }
   }
 
@@ -159,7 +159,7 @@ resource "azurerm_virtual_machine" "vm" {
       type        = "ssh"
       user        = "azureuser"
       private_key = tls_private_key.bootstrap_private_key.private_key_pem
-      host        = azurerm_network_interface.internal.private_ip_address 
+      host        = azurerm_network_interface.main.private_ip_address 
     }
   }
 }
